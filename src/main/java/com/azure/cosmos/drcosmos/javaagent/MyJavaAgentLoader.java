@@ -4,17 +4,31 @@ import com.sun.tools.attach.VirtualMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 public class MyJavaAgentLoader {
 
     static final Logger logger = LoggerFactory.getLogger(MyJavaAgentLoader.class);
+    private static String jarFilePath;
 
-    private static final String jarFilePath = "/Users/moderakh/github/dr-cosmos/target/drcosmos-0"
-        + ".1-jar-with-dependencies.jar";
+    static {
+        try {
+            jarFilePath = new File(MyJavaAgentLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public static void loadAgent(String pid, String option) {
         logger.info("dynamically loading javaagent");
 
         try {
+            if (jarFilePath == null) {
+                System.out.println("failed to inialized");
+                return;
+            }
             System.out.println("connecting to pid " + pid);
             VirtualMachine vm = VirtualMachine.attach(pid);
             vm.loadAgent(jarFilePath, option);
