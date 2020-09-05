@@ -29,29 +29,70 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.2.0
-        </version> <!-- {x-version-update;org.apache.maven.plugins:maven-assembly-plugin;external_dependency} -->
         <executions>
           <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <phase>package</phase>
             <configuration>
               <descriptorRefs>
                 <descriptorRef>jar-with-dependencies</descriptorRef>
               </descriptorRefs>
               <archive>
+                <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                 <manifest>
                   <mainClass>com.azure.cosmos.drcosmos.Main</mainClass>
                 </manifest>
+                <manifestEntries>
+                  <Premain-Class>com.azure.cosmos.drcosmos.javaagent.MyJavaAgent</Premain-Class>
+                  <Agent-Class>com.azure.cosmos.drcosmos.javaagent.MyJavaAgent</Agent-Class>
+                  <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                  <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                </manifestEntries>
               </archive>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
+
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-assembly-plugin</artifactId>-->
+<!--        <version>3.2.0-->
+<!--        </version> &lt;!&ndash; {x-version-update;org.apache.maven.plugins:maven-assembly-plugin;external_dependency} &ndash;&gt;-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>make-assembly</id>-->
+<!--            <phase>package</phase>-->
+<!--            <goals>-->
+<!--              <goal>single</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <descriptorRefs>-->
+<!--                <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--              </descriptorRefs>-->
+<!--              <archive>-->
+<!--                <manifest>-->
+<!--                  <mainClass>com.azure.cosmos.drcosmos.Main</mainClass>-->
+<!--                </manifest>-->
+<!--              </archive>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/java</directory>
+      </resource>
+    </resources>
+
   </build>
   <dependencies>
     <dependency>

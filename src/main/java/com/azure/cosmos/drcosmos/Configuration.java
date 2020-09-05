@@ -14,6 +14,13 @@ public class Configuration {
     @Parameter(names = { "-help", "--help", "-h" }, description = "help")
     private boolean help;
 
+    public boolean isJavaAgent() {
+        return javaAgent;
+    }
+
+    @Parameter(names = { "-javaagent" }, description = "javaagent")
+    private boolean javaAgent;
+
     public boolean isHelp() {
         return help;
     }

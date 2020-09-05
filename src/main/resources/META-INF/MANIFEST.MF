@@ -1,0 +1,5 @@
+Main-Class: com.azure.cosmos.drcosmos.Main
+Agent-Class: com.azure.cosmos.drcosmos.javaagent.MyJavaAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: com.azure.cosmos.drcosmos.javaagent.MyJavaAgent
